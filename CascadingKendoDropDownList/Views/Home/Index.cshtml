@@ -1,0 +1,85 @@
+﻿<head>
+    <meta charset="utf-8" />
+    <title>Kendo UI Snippet</title>
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/themes/7.2.0/default/default-ocean-blue.css" />
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2024.1.130/js/kendo.all.min.js"></script>
+</head>
+
+<body>
+
+   @*  <input id="parent" />
+    <input id="child" /> *@
+    
+    <input id="state" />
+    <input id="city" />
+   
+    <script>
+        // $("#parent").kendoDropDownList({
+        //     dataTextField: "parentName",
+        //     dataValueField: "parentId",
+        //     dataSource: [
+        //         { parentName: "Parent1", parentId: 1 },
+        //         { parentName: "Parent2", parentId: 2 },
+        //         { parentName: "Parent3", parentId: 3 }
+        //     ]
+        // });
+
+        // $("#child").kendoDropDownList({
+        //     cascadeFrom: "parent",
+        //     dataTextField: "childName",
+        //     dataValueField: "childId",
+        //     dataSource: [
+        //         { childName: "Child1", childId: 1, parentId: 1 },
+        //         { childName: "Child2", childId: 2, parentId: 2 },
+        //         { childName: "Child3", childId: 3, parentId: 3 },
+        //         { childName: "Child4", childId: 4, parentId: 1 },
+        //         { childName: "Child5", childId: 5, parentId: 2 },
+        //         { childName: "Child6", childId: 6, parentId: 3 }
+
+        //     ]
+        // });
+
+        var state = $("#state").kendoDropDownList({
+            optionLabel: "Select State...",
+            dataSource: {
+                // serverFiltering: true,
+                transport: {
+                    read: "/State/GetData"
+                }
+            },
+
+            dataTextField: "name",
+            dataValueField: "id",
+            filter: "startswith",
+            filtering: function (e) {
+                var filter = e.filter;
+            }
+        }).data("kendoDropDownList");
+
+
+
+        var city = $("#city").kendoDropDownList({
+            autoBind: true,
+            cascadeFrom: "state",
+            optionLabel: "Select City...",
+            dataTextField: "name",
+            dataValueField: "cityid",
+            dataSource: {
+                transport: {
+                    read: "/State/GetData2"
+                },
+                // create: {
+                //     url: /Kendo/Createdrop",
+                //     dataType: "jsonp"
+                // },
+            },
+            filter: "startswith",
+            filtering: function (e) {
+                var filter = e.filter;
+            }
+        }).data("kendoDropDownList");
+    </script>
+</body>
